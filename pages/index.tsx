@@ -104,7 +104,9 @@ function HomePage() {
         </div>
       )}
       {hostname &&
-        (data.blockedByInstances?.length || data.blocksInstances?.length) && (
+        (data.blockedByInstances?.length ||
+          data.blocksInstances?.length ||
+          undefined) && (
           <div className="w-full max-w-2xl mt-6 overflow-x-auto">
             <table className="w-full divide-y divide-nord4">
               <thead>
