@@ -9,7 +9,7 @@ import {
 
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function Check(req: NextApiRequest, res: NextApiResponse) {
   try {
     const hostname = req.query.hostname as string;
 
@@ -41,4 +41,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.error(err);
     res.status(200).json({ error: "Internal Server Error", err });
   }
-};
+}
