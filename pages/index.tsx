@@ -118,7 +118,7 @@ function HomePage() {
                   <tr key={index} className="text-nord6">
                     <td className="px-4 py-2">{blockedByInstance}</td>
                     <td className="px-4 py-2">
-                      {data.blocksInstances?.length
+                      {data.blocksInstances?.length || undefined
                         ? data.blocksInstances?.[index]
                         : ""}
                     </td>
