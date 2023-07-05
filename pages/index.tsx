@@ -129,6 +129,18 @@ function HomePage() {
                     </td>
                   </tr>
                 ))}
+                {
+                  // if both are 0, say so:
+                  !data.blockedByInstances?.length &&
+                    !data.blocksInstances?.length && (
+                      <tr className="text-nord6">
+                        <td className="px-4 py-2" colSpan={2}>
+                          {hostname} does not block and is not blocked by any
+                          instance.
+                        </td>
+                      </tr>
+                    )
+                }
               </tbody>
             </table>
           </div>
