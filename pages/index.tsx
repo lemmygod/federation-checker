@@ -14,6 +14,8 @@ function HomePage() {
   const [unknownError, setUnknownError] = useState(false);
   const [invalidUrl, setInvalidUrl] = useState(false);
 
+  const [resultIsForHostname, setResultIsForHostname] = useState("");
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -54,6 +56,7 @@ function HomePage() {
       try {
         const newData = res;
         setData(newData);
+        setResultIsForHostname(hostname);
       } catch (e) {
         console.error(e);
       }
@@ -107,9 +110,10 @@ function HomePage() {
         </div>
       )}
       {hostname &&
+        resultIsForHostname === hostname &&
         (data.blockedByInstances?.length ||
-          data.blocksInstances?.length ||
-          undefined) && (
+        data.blocksInstances?.length ||
+        undefined ? (
           <div className="w-full max-w-2xl mt-6 overflow-x-auto">
             <table className="w-full divide-y divide-nord4">
               <thead>
@@ -129,22 +133,31 @@ function HomePage() {
                     </td>
                   </tr>
                 ))}
-                {
-                  // if both are 0, say so:
-                  !data.blockedByInstances?.length &&
-                    !data.blocksInstances?.length && (
-                      <tr className="text-nord6">
-                        <td className="px-4 py-2" colSpan={2}>
-                          {hostname} does not block and is not blocked by any
-                          instance.
-                        </td>
-                      </tr>
-                    )
-                }
+                {!data.blockedByInstances?.length &&
+                  !data.blocksInstances?.length && (
+                    <tr className="text-nord6">
+                      <td className="px-4 py-2" colSpan={2}>
+                        {hostname} does not block and is not blocked by any
+                        instance.
+                      </td>
+                    </tr>
+                  )}
               </tbody>
             </table>
           </div>
-        )}
+        ) : (
+          <>
+            {!data.blockedByInstances?.length &&
+              !data.blocksInstances?.length && (
+                <div className="w-full max-w-md bg-nord0 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex items-center mb-4 gap-4">
+                  <p className="text-nord6">
+                    {hostname} does not block and is not blocked by any
+                    instance.
+                  </p>
+                </div>
+              )}
+          </>
+        ))}
     </div>
   );
 }
