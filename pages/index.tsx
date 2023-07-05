@@ -62,7 +62,10 @@ function HomePage() {
       setUnknownError(true);
     }
   };
-
+  const maxLength = Math.max(
+    data.blockedByInstances?.length || 0,
+    data.blocksInstances?.length || 0
+  );
   return (
     <div className="bg-nord1 min-h-screen min-w-full flex flex-col items-center justify-center p-4 gap-4">
       <form
@@ -116,13 +119,13 @@ function HomePage() {
                 </tr>
               </thead>
               <tbody className="bg-nord0 divide-y divide-nord4">
-                {data.blockedByInstances?.map((blockedByInstance, index) => (
+                {Array.from({ length: maxLength }, (_, index) => (
                   <tr key={index} className="text-nord6">
-                    <td className="px-4 py-2">{blockedByInstance}</td>
                     <td className="px-4 py-2">
-                      {data.blocksInstances?.length || undefined
-                        ? data.blocksInstances?.[index]
-                        : ""}
+                      {data.blockedByInstances?.[index] || ""}
+                    </td>
+                    <td className="px-4 py-2">
+                      {data.blocksInstances?.[index] || ""}
                     </td>
                   </tr>
                 ))}
